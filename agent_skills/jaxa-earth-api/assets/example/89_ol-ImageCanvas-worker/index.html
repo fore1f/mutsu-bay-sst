@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="utf-8">
+
+	<!-- このページでは地図を全画面表示させるため、ピンチインアウトを無効にします（user-scalable=no） -->
+	<!-- ただしiPhone, iPadなどでは無効となるため、別途visualViewportCover.jsで対策します -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	
+	<title>JAXA Earth API for JavaScript</title>
+
+	<link href="../assets/style.css" rel="stylesheet">
+	<!-- <script src="../assets/script.js" type="module"></script> -->
+	
+	<script src="https://cdn.jsdelivr.net/npm/ol@v10.7.0/dist/ol.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v10.7.0/ol.css">
+	
+	<style>
+		html, body {
+			margin: 0;
+			padding: 0;
+			height: 100dvh;
+			overflow: hidden;
+			
+			/* padding-top: env(safe-area-inset-top, 0);
+			padding-right: env(safe-area-inset-right, 0);
+			padding-bottom: env(safe-area-inset-bottom, 0);
+			padding-left: env(safe-area-inset-left, 0); */
+		}
+
+		#map {
+			position: absolute;
+			top: 0px;
+			left: 0px;
+			right: 0px;
+			bottom: 0px;
+		}
+
+		#info {
+			position: absolute;
+			bottom: 0;
+			z-index: 10;
+			background-color: #ffffffcc;
+			margin: 10px;
+			padding: 10px;
+			border-radius: 10px;
+			font-size: 0.7em;
+		}
+
+		#status {
+			position: absolute;
+			top: 0px;
+			right: 0px;
+			z-index: 10;
+			background-color: #ffffffcc;
+			margin: 10px;
+			padding: 10px;
+			border-radius: 10px;
+			pointer-events: none;
+			font-size: 0.7em;
+		}
+
+		#back {
+			position: absolute;
+			top: 0px;
+			left: 0px;
+			z-index: 10;
+			background-color: #ffffffcc;
+			margin: 10px;
+			padding: 10px;
+			border-radius: 10px;
+			font-size: 0.7em;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="back"><a href="../">< 一覧に戻る</a></div>
+
+	<div id="status"></div>
+
+	<div id="map"></div>
+
+	<div id="info">
+		ol.source.ImageCanvasを利用して連携する例（ウェブワーカー利用編）。
+		データの取得・可視化処理をウェブワーカーで実行するため、大きな地図を表示させても地図のスクロールなどの動作が重くなりにくいことが特徴です。
+		地図をクリックするとその点の値を表示します。一部の実行結果はブラウザのコンソールに出力されます。<br><br>
+		背景地図には<a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank">国土地理院の地理院タイル</a>を利用しています。
+	</div>
+
+	<script src="script.js" type="module"></script>
+
+	<script type="module">
+		//ピンチインアウトしてしまった場合に、地図のスクロールを停止させるために画面の最上面に透明なレイヤーを追加します。
+		//これがないと、意図しないピンチインアウトで地図が画面全体に広がってしまった場合に、
+		//スクロール、ズームしても地図だけが動いてしまい、元の画面に戻れなくなります。
+		import createCover from "./visualViewportCover.js";
+		createCover();
+	</script>
+</body>
+
+</html>

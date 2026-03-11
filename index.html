@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>陸奥湾 海面水温(SST) 比較マップ - JAXA Earth API</title>
+    
+    <!-- MapLibre GL JS -->
+    <script src="https://unpkg.com/maplibre-gl@^5.17.0/dist/maplibre-gl.js"></script>
+    <link href="https://unpkg.com/maplibre-gl@^5.17.0/dist/maplibre-gl.css" rel="stylesheet" />
+
+    <style>
+        body { 
+            font-family: 'Inter', 'Segoe UI', sans-serif; 
+            background-color: #121212; 
+            color: #ffffff; 
+            margin: 0; 
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+        header {
+            padding: 15px 20px;
+            background: rgba(30, 30, 30, 1.0);
+            border-bottom: 1px solid #444;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+        h1 { 
+            margin: 0; 
+            font-size: 1.2rem;
+            font-weight: 500; 
+            letter-spacing: 1px;
+            color: #fff;
+        }
+        .title-container {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .header-desc {
+            margin: 0;
+            font-size: 0.8rem;
+            color: #aaa;
+        }
+        .header-desc strong {
+            color: #00d2ff;
+        }
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 8px 15px;
+            border-radius: 8px;
+            border: 1px solid #555;
+        }
+        .month-display {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 60px;
+        }
+        #month-label {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #00d2ff;
+            line-height: 1;
+        }
+        .month-text {
+            font-size: 0.7rem;
+            color: #aaa;
+            margin-top: 2px;
+        }
+        #month-slider {
+            width: 150px;
+            cursor: pointer;
+            accent-color: #00d2ff;
+        }
+        button {
+            background-color: #00d2ff;
+            color: #000;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background-color: #00a0cc;
+        }
+        .nav-btn {
+            background-color: transparent;
+            color: #00d2ff;
+            border: 1px solid #00d2ff;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        .nav-btn:hover {
+            background-color: rgba(0, 210, 255, 0.2);
+            color: #fff;
+        }
+        
+        #maps-wrapper {
+            display: flex;
+            flex-grow: 1;
+            width: 100%;
+            position: relative;
+        }
+        
+        .map-section {
+            flex: 1;
+            position: relative;
+            border-right: 2px solid #333;
+            display: flex;
+            flex-direction: column;
+        }
+        .map-section:last-child {
+            border-right: none;
+        }
+
+        .map-header {
+            background: rgba(20, 20, 20, 0.9);
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #444;
+            z-index: 5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .year-select {
+            background: #333;
+            color: #fff;
+            border: 1px solid #555;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .year-select:focus {
+            outline: none;
+            border-color: #00d2ff;
+        }
+
+        .map-container {
+            flex-grow: 1;
+            background-color: #0a0a0a;
+            position: relative;
+        }
+        
+        /* MapLibre container fills .map-container completely */
+        .map-instance {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+        /* Color Legend */
+        #legend {
+            position: absolute;
+            bottom: 30px;
+            left: 20px;
+            background: rgba(20, 20, 20, 0.85);
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid #444;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.8);
+            z-index: 100;
+            backdrop-filter: blur(4px);
+        }
+        #legend p {
+            margin: 0 0 8px 0;
+            font-size: 0.85rem;
+            color: #ddd;
+            font-weight: bold;
+        }
+        .gradient-bar {
+            width: 180px;
+            height: 10px;
+            background: linear-gradient(to right, rgb(0,0,255), rgb(0,255,255), rgb(0,255,0), rgb(255,255,0), rgb(255,0,0));
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+        .legend-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: #aaa;
+        }
+
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.85);
+            color: #00d2ff;
+            padding: 15px 30px;
+            border-radius: 8px;
+            z-index: 20;
+            display: none;
+            font-size: 1rem;
+            font-weight: bold;
+            border: 1px solid #333;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        /* Sync indicator */
+        #sync-indicator {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 210, 255, 0.2);
+            color: #00d2ff;
+            border: 1px solid #00d2ff;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 100;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .sync-icon {
+            font-size: 1.1rem;
+        }
+        /* Hover Tooltip */
+        #hover-tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.85);
+            color: #0ff;
+            padding: 5px 10px;
+            border-radius: 4px;
+            border: 1px solid #0ff;
+            font-weight: bold;
+            font-size: 1.1rem;
+            pointer-events: none;
+            display: none;
+            z-index: 200;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            white-space: pre;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="title-container">
+            <h1>青森県周辺 海面水温 年次比較 【GCOM-C SGLI】</h1>
+            <p class="header-desc">このアプリで表示しているデータは、JAXAの人工衛星「しきさい（GCOM-C）」が宇宙から特殊なカメラで撮影・計測した<strong>「海の一番上の表面温度（海面水温）」</strong>の月間平均データです。</p>
+        </div>
+        <div class="controls">
+            <button id="play-btn">▶ Play</button>
+            <button id="prev-month-btn" class="nav-btn">◀</button>
+            <input type="range" id="month-slider" min="1" max="12" value="1">
+            <button id="next-month-btn" class="nav-btn">▶</button>
+            <div class="month-display">
+                <span id="month-label">01</span>
+                <span class="month-text">月</span>
+            </div>
+        </div>
+    </header>
+    
+    <div id="maps-wrapper">
+        <div id="sync-indicator">
+            <span class="sync-icon">🔗</span> 視点同期中
+        </div>
+        
+        <!-- Left Map -->
+        <div class="map-section">
+            <div class="map-header">
+                比較元: 
+                <select id="year-left" class="year-select">
+                    <option value="2018">2018年</option>
+                    <option value="2019" selected>2019年</option>
+                    <option value="2020">2020年</option>
+                    <option value="2021">2021年</option>
+                    <option value="2022">2022年</option>
+                    <option value="2023">2023年</option>
+                    <option value="2024">2024年</option>
+                    <option value="2025">2025年</option>
+                    <option value="2026">2026年</option>
+                </select>
+            </div>
+            <div class="map-container">
+                <div id="map-left" class="map-instance"></div>
+                <div id="loading-left" class="loading">読込中...</div>
+                
+                <!-- Legend only on left map -->
+                <div id="legend">
+                    <p>海面水温 (℃)</p>
+                    <div class="gradient-bar"></div>
+                    <div class="legend-labels">
+                        <span>0℃</span>
+                        <span>17.5℃</span>
+                        <span>35℃</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Map -->
+        <div class="map-section">
+            <div class="map-header">
+                比較先: 
+                <select id="year-right" class="year-select">
+                    <option value="2018">2018年</option>
+                    <option value="2019">2019年</option>
+                    <option value="2020">2020年</option>
+                    <option value="2021">2021年</option>
+                    <option value="2022">2022年</option>
+                    <option value="2023">2023年</option>
+                    <option value="2024" selected>2024年</option>
+                    <option value="2025">2025年</option>
+                    <option value="2026">2026年</option>
+                </select>
+            </div>
+            <div class="map-container">
+                <div id="map-right" class="map-instance"></div>
+                <div id="loading-right" class="loading">読込中...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hover Tooltip -->
+    <div id="hover-tooltip"></div>
+
+    <script type="module" src="./app.js"></script>
+</body>
+</html>

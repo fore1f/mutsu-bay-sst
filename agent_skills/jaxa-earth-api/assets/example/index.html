@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>JAXA Earth API for JavaScript</title>
+
+	<!-- assets/内のファイルはサンプルページのデザイン用です。JAXA Earth API for JavaScriptの動作とは無関係です。 -->
+	<link href="./assets/style.css" rel="stylesheet">
+	<script src="./assets/script.js" type="module"></script>
+
+</head>
+
+<body>
+	<div id="title">JAXA Earth API for JavaScript サンプル</div>
+
+	<p>
+		<a href="https://data.earth.jaxa.jp/api/javascript/v2.0.0/" target="_blank">JAXA Earth API for JavaScript Version 2.0.0</a> のサンプルです。
+		ファイル一式下記からダウンロード可能です。詳細な解説はソースコード内のコメントをご参照ください。
+		APIの全体についての説明は<a href="https://data.earth.jaxa.jp/" target="_blank">こちら</a>です。
+	</p>
+
+	<p><a href="./example.zip" id="dl">ファイル一式ダウンロード</a></p>
+
+
+	<p>
+		このサンプルではES Module形式のJavaScriptを利用しています。
+		動作させるためにはサーバー経由でアクセスする必要があり、HTMLファイルをダブルクリックで開いても動作しません。
+		端末ローカルで実行する際はVS Codeの<a href="https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer" target="_blank">Live Server</a>等をご利用ください。
+	</p>
+
+	<p>
+		また、一部の実行結果はブラウザのコンソール上に出力されます。
+		コンソールを開くには、例えばWindows端末のChromeの場合は、ブラウザの[メニュー]→[その他のツール]→[デベロッパーツール]を開くか、[Shift] + [Ctrl] + [I]を押します。
+	</p>
+
+
+	<h1>画像表示</h1>
+	<p>画像を取得してブラウザ上に表示するサンプルです。</p>
+
+	<h2>je.getDataObject</h2>
+	<p>DataObjectを簡易的に取得するための機能（je.getDataObject）を利用したサンプルです。</p>
+	<ul>
+		<li><a href="./00_getDataObject/">基本編</a></li>
+		<li><a href="./01_getDataObject/">時刻指定、読込状況表示</a></li>
+	</ul>
+	
+	
+
+	<h2>je.ImageCollection</h2>
+	<p>
+		collection.jsonを指定してje.ImageCollectionを作成し、任意の時刻のje.Imageを取り出し、緯度経度と画像サイズからDataObjectを取り出して可視化するサンプルです。
+		je.getDataObjectよりも複雑な処理を行えます。
+	</p>
+	<ul>
+		<li><a href="./20_ImageCollection/">基本編</a></li>
+	</ul>
+	
+	<h2>je.Image</h2>
+	<p>
+		je.ImageCollectionから任意の時刻のje.Imageを取り出し、緯度経度と画像サイズからDataObjectを取り出して可視化するサンプルです。
+		時刻指定、読込状況表示、カラーマップの差し替えなどが可能です。
+	</p>
+	<ul>
+		<li><a href="./30_Image/">基本編</a></li>
+	</ul>
+
+
+	<h1>様々な可視化</h1>
+	<p>カラーマップを変更したり、独自の可視化を行う場合のサンプルです。</p>
+
+	<h2>je.image.ColorMap & je.image.createCanvas</h2>
+	<p>カラーマップと画像を作成するサンプルです。</p>
+	<ul>
+		<li><a href="./40_ColorMap/">基本編</a></li>
+	</ul>
+
+	<h2>HTMLCanvasElement & ImageData</h2>
+	<p><a href="https://developer.mozilla.org/ja/docs/Web/API/HTMLCanvasElement"
+			target="_blank">HTMLCanvasElement</a>と<a href="https://developer.mozilla.org/ja/docs/Web/API/ImageData"
+			target="_blank">ImageData</a>を利用して、ピクセル単位で色を評価して独自の可視化を行なう場合のサンプルです。</p>
+	<ul>
+		<li><a href="./45_hillshademap/">基本編（地形データから陰影起伏図を作成）</a></li>
+	</ul>
+
+
+	<h1>各種ファイル出力</h1>
+	<p>様々なアプリケーションと連携するためのファイルに変換してダウンロードさせることも可能です。</p>
+
+	<h2 id="csv">CSVファイル</h2>
+	<p>CSVファイルを作成し、ダウンロードするサンプルです。CSVファイルはエクセルやQGISなどで開けます。</p>
+	<ul>
+		<li><a href="./50_csv/">基本編</a></li>
+	</ul>
+
+	<h2 id="glb">GLBファイル（3Dモデル）</h2>
+	<p>GLBファイルを作成し、ダウンロードするサンプルです。<a href="https://threejs.org/" target="_blank">Three.js</a>を利用します。GLBファイルはBlenderなどで開けます。</p>
+	<ul>
+		<li><a href="./53_glb/">基本編</a></li>
+	</ul>
+
+	<h2 id="kmz">KMZファイル</h2>
+	<p>KMZファイルを作成し、ダウンロードするサンプルです。KMZファイルはGoogle Earthなどで開けます。</p>
+	<ul>
+		<li><a href="./56_kmz/">基本編</a></li>
+	</ul>
+
+	
+	<h1 id="compute">データ間演算</h1>
+	<p>データ間の演算をするサンプルです。je.data.computeを利用すると、単位の変換をしたり、平年差を計算したり、マスク処理したりすることが可能です。</p>
+
+	<h2>単位換算</h2>
+	<p>ケルビン単位のデータを℃単位のデータに換算するサンプルです。</p>
+	<ul>
+		<li><a href="./60_unit/">基本編</a></li>
+	</ul>
+
+	<h2 id="anomaly">平年差（偏差）の計算</h2>
+	<p>観測値と平年値から平年差（偏差）＝観測値－平年値を計算するサンプルです。</p>
+	<ul>
+		<li><a href="./61_anomaly/">基本編</a></li>
+	</ul>
+
+	<h2 id="mask">GeoJSONによるマスク処理</h2>
+	<p>行政界のGeoJSONからマスク画像を作成し、マスク画像を適用して統計値を計算するサンプルです。</p>
+	<ul>
+		<li><a href="./65_mask/">基本編</a></li>
+	</ul>
+	
+	<h1>解析処理</h1>
+	<p>データを使った簡単な解析処理サンプルです。</p>
+
+	<h2 id="timeseries">時系列データ処理</h2>
+	<p>時系列のデータを取得し、アニメーション表示してグラフ化を行う例です。je.data.computeを利用して、場所ごとの季節変化量を求めた画像も作成します。グラフ化には<a href="https://plotly.com/javascript/" target="_blank">Plotly</a>を利用します。</p>
+	<ul>
+		<li><a href="./70_timeseries/">地表面温度の季節変化</a></li>
+	</ul>
+
+	<h2 id="correlation">データの相関</h2>
+	<p>複数のデータから相関関係を求める例です。</p>
+	<ul>
+		<li><a href="./75_correlation/">標高と地表面温度の関係</a></li>
+	</ul>
+
+
+	<h1 id="maps">地図API連携</h1>
+	<p>
+		je.ImageGeneratorまたはje.TileGeneratorを利用して、インタラクティブに移動できる各種地図APIと連携するサンプルです。
+		1枚の単体画像として描画するje.ImageGeneratorの方が高速で、表示されたデータを数値配列として扱うことが可能です。
+		一方でje.TileGeneratorはWMTS方式と同じタイル単位で描画するため多少低速ですが、多くの地図APIと連携可能であり、<a href="http://proj4js.org/" target="_blank">proj4.js</a>を用いることで任意の投影法でも利用可能です。
+	</p>
+
+	<h2 id="ol">OpenLayers</h2>
+	<p><a href="https://openlayers.org/" target="_blank">OpenLayers</a>に取り込めるレイヤーを作成するサンプルです。次のサンプルではブラウザのメインスレッドを使用します。</p>
+	<p>je.ImageGeneratorと<a href="https://openlayers.org/en/latest/apidoc/module-ol_source_ImageCanvas.html" target="_blank">ImageCanvas</a> を利用することで、1枚の単体画像として描画します。</p>
+	<ul>
+		<li><a href="./80_ol-ImageCanvas-EPSG4326/">等緯度経度編(EPSG:4326)</a></li>
+		<li><a href="./81_ol-ImageCanvas-EPSG3857/">メルカトル編(EPSG:3857)</a></li>
+		<li><a href="./82_ol-ImageCanvas-EPSG3995/">北極編(EPSG:3995)</a></li>
+		<li><a href="./83_ol-ImageCanvas-EPSG3031/">南極編(EPSG:3031)</a></li>
+
+		<!-- <li><a href="./OpenLayers/example2.html">イベント、日時変更</a></li> -->
+	</ul>
+
+	<p>je.TileGeneratorと<a href="https://openlayers.org/en/latest/apidoc/module-ol_source_ImageTile.html" target="_blank">ImageTile</a> を利用することで、WMTS方式のタイル単位で描画します。</p>
+	<ul>
+		<li><a href="./86_ol-ImageTile-EPSG3857/">メルカトル編(EPSG:3857)</a></li>
+		<li><a href="./87_ol-ImageTile-proj4js/">正距方位図法編</a></li>
+	</ul>
+
+	<p>次のサンプルではブラウザのウェブワーカー上でje.ImageGeneratorを利用して処理します。ウェブワーカーで並行処理することで、地図を大きく表示する場合であってもメインスレッドで処理される地図APIの動作が重くなりにくいため、実用的には次の方法を推奨します。</p>
+	<ul>
+		<li><a href="./89_ol-ImageCanvas-worker/">ウェブワーカーを利用する場合</a></li>
+	</ul>
+
+
+	<h2 id="leaflet">Leaflet</h2>
+	<p><a href="https://leafletjs.com/" target="_blank">Leaflet</a>に取り込めるレイヤーを作成するサンプルです。</p>
+	<ul>
+		<li><a href="./90_leaflet/">基本編</a></li>
+	</ul>
+
+	<h2 id="maplibre">MapLibre GL JS</h2>
+	<p><a href="https://maplibre.org/" target="_blank">MapLibre GL JS</a>に取り込めるレイヤーを作成するサンプルです。</p>
+	<ul>
+		<li><a href="./93_maplibre/">基本編</a></li>
+		<li><a href="./94_maplibre-3D-terrain/">3D地形表示（Terrain RGBタイル動的生成）</a></li>
+	</ul>
+
+	<h2 id="cesium">CesiumJS</h2>
+	<p><a href="https://cesium.com/platform/cesiumjs/" target="_blank">CesiumJS</a>に取り込めるレイヤーを作成するサンプルです。</p>
+	<ul>
+		<li><a href="./96_cesium/">基本編</a></li>
+	</ul>
+
+	<h2 id="arcgis">ArcGIS Maps SDK for JavaScript</h2>
+	<p><a href="https://developers.arcgis.com/javascript/" target="_blank">ArcGIS Maps SDK for JavaScript</a>に取り込めるレイヤーを作成するサンプルです。</p>
+	<ul>
+		<li><a href="./98_arcgis/">基本編</a></li>
+	</ul>
+
+	<footer>©2026 Japan Aerospace Exploration Agency</footer>
+</body>
+
+</html>

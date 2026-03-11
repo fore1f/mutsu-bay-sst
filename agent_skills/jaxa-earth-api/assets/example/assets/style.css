@@ -1,0 +1,60 @@
+/* このファイルはサンプルページのデザイン用です。JAXA Earth API for JavaScriptの動作とは無関係です */
+
+body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+	color: #333;
+	background-color: rgb(242, 244, 248);
+	padding: 10px;
+	margin: 10px;
+}
+
+@media (min-width: 800px) {
+	body {
+		width: calc(800px - 10px * 2 - 10px * 2);
+		margin: 10px auto;
+	}
+}
+
+#title {
+	text-align: center;
+	font-size: 1.6em;
+	font-weight: bold;
+	margin: 32px 0px;
+}
+
+#dl {
+	display: inline-block;
+	background-color: #004ea2;
+	color: white;
+	font-weight: bold;
+	border-radius: 10px;
+	text-decoration: none;
+	padding: 8px;
+	margin: 16px 0px;
+}
+
+h1 {
+	font-size: 1.7em;
+	border-bottom: 2px solid #004ea2;
+	margin: 32px 0px;
+}
+
+h2 {
+	font-size: 1.3em;
+	margin: 32px 0px 8px 0px;
+}
+
+li {
+	padding-bottom: 8px;
+}
+
+header {
+	margin-bottom: 32px;
+
+}
+
+footer {
+	font-size: 0.7em;
+	text-align: center;
+	margin-top: 64px;
+}
