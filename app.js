@@ -4,8 +4,7 @@ const tileSize = 256;
 const collectionUrl = "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly/collection.json";
 const band = "SST";
 
-// JAXA SST data corresponds to Celsius, let's map 0~35 for visual range
-const COLOR_MIN = 0;   // 0 ℃
+const COLOR_MIN = -2;  // -2 ℃
 const COLOR_MAX = 35;  // 35 ℃
 
 // Map bounds for Mutsu Bay to limit fetched data
