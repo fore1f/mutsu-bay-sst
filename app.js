@@ -142,8 +142,8 @@ function initMapInstance(containerId) {
                 }
             ]
         },
-        center: [140.85, 41.05], // Slightly shifted west to center Mutsu Bay in the split pane
-        zoom: 8.5,
+        center: [141.0, 41.05], // Slightly shifted to center Mutsu Bay
+        zoom: window.innerWidth < 768 ? 7.6 : 8.5,
         interactive: true
     });
 }
