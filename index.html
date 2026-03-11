@@ -267,18 +267,19 @@
         }
 
         #info-toggle-btn {
-            background: none;
+            background: rgba(0, 210, 255, 0.1);
             border: 1px solid #00d2ff;
             color: #00d2ff;
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            padding: 0;
+            border-radius: 12px;
+            width: auto;
+            height: auto;
+            padding: 4px 10px;
             display: none; /* Desktop hidden */
             align-items: center;
             justify-content: center;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             flex-shrink: 0;
+            cursor: pointer;
         }
 
         /* Mobile Responsive Styles */
@@ -366,7 +367,7 @@
         <div class="title-container">
             <div class="title-wrapper">
                 <h1>青森県周辺 海面水温 年次比較 【GCOM-C SGLI】</h1>
-                <button id="info-toggle-btn">i</button>
+                <button id="info-toggle-btn">測定値について</button>
             </div>
             <p id="header-desc" class="header-desc">気候変動観測衛星「しきさい」（GCOM-C）によって観測された海面水温 (SST) です。<strong>特殊なカメラで撮影・計測した「海の一番上の表面温度（海面水温）」の月間平均データ</strong>です。空間分解能約250mで沿岸付近まで観測できることが特徴です。雲がある場合には観測できないためデータが欠損します。 JAXA Earth API では空間分解能約250mの全球データを掲載しています。昼(Daytime)のデータは各地の地方時における午前10時半頃に観測されたデータです。</p>
         </div>
@@ -452,7 +453,7 @@
         document.getElementById('info-toggle-btn').addEventListener('click', function() {
             const desc = document.getElementById('header-desc');
             desc.classList.toggle('active');
-            this.textContent = desc.classList.contains('active') ? '×' : 'i';
+            this.textContent = desc.classList.contains('active') ? ' 閉じる ' : '測定値について';
         });
     </script>
 </body>
