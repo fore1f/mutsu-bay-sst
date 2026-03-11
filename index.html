@@ -259,6 +259,67 @@
             white-space: pre;
             line-height: 1.4;
         }
+
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            body {
+                overflow: auto; /* Allow scrolling on body if needed */
+                height: auto;
+                min-height: 100vh;
+            }
+            header {
+                flex-direction: column;
+                padding: 10px;
+                gap: 12px;
+                text-align: center;
+                height: auto;
+            }
+            .title-container {
+                align-items: center;
+            }
+            h1 {
+                font-size: 1rem;
+            }
+            .header-desc {
+                font-size: 0.75rem;
+            }
+            .controls {
+                width: 100%;
+                box-sizing: border-box;
+                justify-content: center;
+                gap: 8px;
+                padding: 5px;
+            }
+            #month-slider {
+                width: 100px;
+                flex: 1;
+            }
+            #maps-wrapper {
+                flex-direction: column;
+                height: 1200px; /* Force height to show both maps vertically */
+                flex-grow: 0;
+            }
+            .map-section {
+                height: 600px;
+                border-right: none;
+                border-bottom: 2px solid #333;
+            }
+            .map-section:last-child {
+                border-bottom: none;
+            }
+            #legend {
+                bottom: 10px;
+                left: 10px;
+                padding: 5px 10px;
+                transform: scale(0.9);
+                transform-origin: bottom left;
+            }
+            #sync-indicator {
+                top: 10px;
+                padding: 4px 10px;
+                font-size: 0.7rem;
+            }
+        }
     </style>
 </head>
 <body>
