@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>JAXA Earth API for JavaScript</title>
+
+	<link href="../assets/style.css" rel="stylesheet">
+	<script src="../assets/script.js" type="module"></script>
+	
+	<!--
+		three.js
+		(C) three.js authors
+		https://threejs.org/
+
+		---
+		The MIT License
+
+		Copyright © 2010-2024 three.js authors
+
+		Permission is hereby granted, free of charge, to any person obtaining a copy
+		of this software and associated documentation files (the "Software"), to deal
+		in the Software without restriction, including without limitation the rights
+		to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+		copies of the Software, and to permit persons to whom the Software is
+		furnished to do so, subject to the following conditions:
+
+		The above copyright notice and this permission notice shall be included in
+		all copies or substantial portions of the Software.
+
+		THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+		IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+		FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+		AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+		LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+		OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+		THE SOFTWARE.
+	-->
+	<script type="importmap">
+		{
+			"imports": {
+				"three": "https://cdn.jsdelivr.net/npm/three@0.181.0/build/three.module.js",
+				"three/addons/": "https://cdn.jsdelivr.net/npm/three@0.181.0/examples/jsm/"
+			}
+		}
+	</script>
+	
+	<style>
+		#viewer {
+			width: 800px;
+			height: 400px;
+			border: solid 1px gray;
+			background-color: #ccc;
+		}
+	</style>
+</head>
+
+<body>
+	<p>
+		Three.jsを用いた例。AW3Dの地形データから3D形状を作成し、地表面温度の画像をテクスチャとして貼り付けています。
+		3DモデルはGLBファイルとしてダウンロードできます。
+		一部の実行結果はブラウザのコンソールに出力されます。
+	</p>
+	<p>
+		気候変動観測衛星「しきさい」（GCOM-C）による地表面温度の観測時間帯は午前10時半頃であり、富士山の南東斜面に日光が良く当たることで地表面温度が高くなっています。
+	</p>
+
+	<!-- 3D表示画面 -->
+	<div id="viewer"></div><br>
+
+	<!-- ダウンロード用のボタン -->
+	<button id="download">GLBファイルをダウンロード</button>
+
+	<script src="script.js" type="module"></script>
+</body>
+
+</html>

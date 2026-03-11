@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>JAXA Earth API for JavaScript</title>
+
+	<link href="../assets/style.css" rel="stylesheet">
+	<script src="../assets/script.js" type="module"></script>
+	
+	<script src="https://cesium.com/downloads/cesiumjs/releases/1.138/Build/Cesium/Cesium.js"></script>
+	<link href="https://cesium.com/downloads/cesiumjs/releases/1.138/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+
+	<style>
+		#cesiumContainer {
+			width: 800px;
+			height: 400px;
+			border: solid 1px gray;
+			background-color: #ccc;
+		}
+	</style>
+</head>
+
+<body>
+	<p>
+		CesiumJSと連携する例。一部の実行結果はブラウザのコンソールに出力されます。
+	</p>
+
+	<!-- 地図表示 -->
+	<div id="cesiumContainer"></div>
+
+	<script src="script.js" type="module"></script>
+</body>
+
+</html>

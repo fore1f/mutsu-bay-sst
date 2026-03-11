@@ -22,7 +22,7 @@ let isPlaying = false;
 let playInterval = null;
 
 let yearLeft = 2019;
-let yearRight = 2024;
+let yearRight = 2025;
 
 let mapLeft = null;
 let mapRight = null;

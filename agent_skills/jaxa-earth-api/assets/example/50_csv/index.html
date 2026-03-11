@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>JAXA Earth API for JavaScript</title>
+
+	<link href="../assets/style.css" rel="stylesheet">
+	<script src="../assets/script.js" type="module"></script>
+</head>
+
+<body>
+	<p>
+		je.data.createCsvなどを用いた例。下記ボタンからCSVファイルをダウンロードできます。一部の実行結果はブラウザのコンソールに出力されます。
+	</p>
+
+	<p>
+		次のCSVファイルは、下記画像のピクセルの位置をそのままの並び順で表計算ソフトのセル位置に置き換えたものです。エクセルなどで開けます。
+	</p>
+	<button id="download1">CSVファイル（ピクセル並び順）</button><br><br>
+
+	<p>
+		次のCSVファイルは、各ピクセルのピクセル中心の経度、緯度、値を列挙したものです。QGISなどで開けます。
+	</p>
+	<button id="download2">CSVファイル（経度、緯度、値の列挙）</button><br><br>
+
+	<script src="script.js" type="module"></script>
+</body>
+
+</html>

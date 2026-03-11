@@ -1,0 +1,6 @@
+{
+  "name": "jaxa-earth-api",
+  "version": "1.0.0",
+  "description": "Agent Skills by JAXA Earth API for JavaScript",
+  "type": "module"
+}
